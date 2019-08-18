@@ -39,6 +39,14 @@ async def reconnect(**kwargs):
     loop.create_task(bot.connect())
     await bot.wait("CLIENT_CONNECT")
 
+@bot.on('PING')
+def ping(message, **kwargs):
+    print("[%s] <server=>%s> PING" % (
+        strftime("%H:%M:%S", gmtime()),
+        nick
+    ))
+    bot.send('PONG', message=message)
+
 @bot.on('PRIVMSG')
 def privmsg(**kwargs):
     if kwargs["target"] == '#turkish':
